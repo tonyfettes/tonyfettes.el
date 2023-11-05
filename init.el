@@ -13,14 +13,6 @@
 (setq auto-save-default nil)
 (setq backup-directory-alist '(("" . "~/.config/emacs/backup")))
 
-;; Import environment variables from Zsh
-;; (let ((path (shell-command-to-string "zsh -c '. ~/.config/zsh/.zshenv; . ~/.config/zsh/.zshrc; echo $PATH' 2> /dev/null")))
-;;   (setenv "PATH" path)
-;;   (setq exec-path 
-;;         (append
-;;          (split-string-and-unquote path ":")
-;;           exec-path)))
-
 ;; Don't "jump" when move to edges of the screen. See also:
 ;; https://stackoverflow.com/questions/3631220/fix-to-get-smooth-scrolling-in-emacs
 (setq scroll-step 1
@@ -63,11 +55,11 @@
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
+      (bootstrap-version 6))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
         (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
          'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
@@ -333,9 +325,9 @@
 ;; Proof General, for Coq
 (use-package proof-general)
 
-;; ;; Agda
-;; (load-file (let ((coding-system-for-read 'utf-8))
-;;                 (shell-command-to-string "agda-mode locate")))
+;; Agda
+(load-file (let ((coding-system-for-read 'utf-8))
+                (shell-command-to-string "agda-mode locate")))
 
 ;; (setq auto-mode-alist
 ;;       (append
