@@ -6,8 +6,6 @@
 
 ;;; Code:
 
-;; https://github.com/raxod502/straight.el#getting-started
-
 ;; Prevent Emacs from creating backup file
 (setq make-backup-files nil)
 (setq auto-save-default nil)
@@ -25,6 +23,7 @@
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 (tool-bar-mode 0)
+(fringe-mode 0)
 
 ;; Disable cursor blinking
 (blink-cursor-mode 0)
