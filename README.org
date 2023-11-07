@@ -1,0 +1,3 @@
+* Tony Fettes' Emacs configuration
+
+pretty much vanilla, with some popular package installed.
