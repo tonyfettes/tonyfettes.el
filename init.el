@@ -265,9 +265,6 @@
 ;; Zig
 (use-package zig-mode)
 
-;; Flex/Bison
-(use-package bison-mode)
-
 ;; OCaml and Reason
 (use-package reason-mode
   :hook (reason-mode . eglot-ensure))
