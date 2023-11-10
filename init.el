@@ -4,6 +4,11 @@
 
 ;; This is tonyfettes' Emacs configuration
 
+;; Set authenticaion source
+(setq auth-sources
+      '("~/.config/emacs/auth-info"
+        "~/.emacs.d/auth-info"))
+
 ;; Don't "jump" when move to edges of the screen. See also:
 ;; https://stackoverflow.com/questions/3631220/fix-to-get-smooth-scrolling-in-ema
 (setq scroll-step 1
@@ -142,6 +147,9 @@
 
 ;; Git intergration
 (use-package magit)
+
+;; GitHub intergration
+(use-package forge :after magit)
 
 ;; Which-keys
 (use-package which-key
