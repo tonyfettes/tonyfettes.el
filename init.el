@@ -1,25 +1,17 @@
-;;; init.el --- tonyfettes's Emacs configuration
+;;; init.el --- tonyfettes' Emacs configuration
 
 ;;; Commentary:
 
-;; This is tonyfettes's Emacs configuration.
-
-;;; Code:
-
-;; Prevent Emacs from creating backup file
-(setq make-backup-files nil)
-(setq auto-save-default nil)
-(setq backup-directory-alist '(("" . "~/.config/emacs/backup")))
+;; This is tonyfettes' Emacs configuration
 
 ;; Don't "jump" when move to edges of the screen. See also:
-;; https://stackoverflow.com/questions/3631220/fix-to-get-smooth-scrolling-in-emacs
+;; https://stackoverflow.com/questions/3631220/fix-to-get-smooth-scrolling-in-ema
 (setq scroll-step 1
       scroll-margin 1
       redisplay-dont-pause t
       scroll-conservatively 101
       scroll-preserve-screen-position 1)
 
-;; Close menu/scroll/tool bar
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 (tool-bar-mode 0)
@@ -28,17 +20,10 @@
 ;; Disable cursor blinking
 (blink-cursor-mode 0)
 
-;; Set font.
-;; (add-to-list 'default-frame-alist
-;;        '(font . "monospace-12"))
-
-;; Show line numbers.
-;; (global-display-line-numbers-mode)
-
-;; set nowrap
+;; Don't wrap line
 (set-default 'truncate-lines t)
 
-;; Highlight current cursor line
+;; Highlight current cursorline
 (global-hl-line-mode)
 
 ;; Use space for all indentation
@@ -47,10 +32,11 @@
 ;; Turn off the electric indent mode
 (electric-indent-mode -1)
 
-;; Use straight.el as package manager.
-;; See https://github.com/raxod502/straight.el
 ;; Provide `:straight t` in every call to `use-package`.
 (defvar straight-use-package-by-default t)
+
+;; Use straight.el as package manager.
+;; See https://github.com/radian-software/straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -66,10 +52,6 @@
 
 ;; use-package. See https://github.com/jwiegley/use-package
 (straight-use-package 'use-package)
-
-;; Import environment variables from shell.
-(use-package exec-path-from-shell
-  :config (when (daemonp) (exec-path-from-shell-initialize)))
 
 (use-package restart-emacs)
 
@@ -152,7 +134,7 @@
 ;; Indent guide
 (use-package indent-guide
   :init (indent-guide-global-mode)
-  :config (setq indent-guide-char "|"))
+  :config (setq indent-guide-char "▏"))
 
 ;; Undo tree
 ;; (use-package undo-tree
@@ -264,7 +246,10 @@
 ;; Zig
 (use-package zig-mode)
 
-;; OCaml and Reason
+;; OCaml
+(use-package tuareg)
+
+;; Reason
 (use-package reason-mode
   :hook (reason-mode . eglot-ensure))
 
@@ -321,40 +306,6 @@
 ;; Proof General, for Coq
 (use-package proof-general)
 
-;; Agda
-(load-file (let ((coding-system-for-read 'utf-8))
-                (shell-command-to-string "agda-mode locate")))
-
-;; (setq auto-mode-alist
-;;       (append
-;;        '(("\\.agda\\'" . agda2-mode)
-;; 	 ("\\.lagda.md\\'" . agda2-mode))
-;;        auto-mode-alist))
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(agda2-highlight-deadcode-face ((t (:foreground "#616e88"))))
- '(agda2-highlight-keyword-face ((t (:foreground "#81A1C1"))))
- '(agda2-highlight-module-face ((t (:foreground "#8FBCBB"))))
- '(agda2-highlight-number-face ((t (:foreground "#B48EAD"))))
- '(agda2-highlight-operator-face ((t (:foreground "#81A1C1"))))
- '(agda2-highlight-primitive-type-face ((t (:foreground "#8FBCBB"))))
- '(agda2-highlight-record-face ((t (:foreground "#8FBCBB")))))
-
 (provide 'init)
 
 ;;; init.el ends here
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("30feaaa766f262fa91b170aadf727a6dca5e72f14d728e594d2622dd04f27b0b" default))
- '(org-agenda-files
-   '("~/workspace/fscut/main.org" "/home/tonyfettes/workspace/fplab/main.org" "/home/tonyfettes/workspace/courses/ve311/main.org" "/home/tonyfettes/workspace/job/main.org" "/home/tonyfettes/workspace/courses/ve441/main.org" "/home/tonyfettes/workspace/courses/ve320/main.org"))
- '(sage-shell:use-prompt-toolkit nil)
- '(sage-shell:use-simple-prompt t))
