@@ -4,6 +4,9 @@
 
 ;; This is tonyfettes' Emacs configuration
 
+;; Add "lisp" to load-path
+(add-to-list 'load-path (locate-user-emacs-file "lisp"))
+
 ;; Set authenticaion source
 (setq auth-sources
       '("~/.config/emacs/auth-info"
@@ -13,17 +16,14 @@
 (scroll-bar-mode 0)
 
 ;; Don't "jump" when move to edges of the screen. See also:
-;; https://stackoverflow.com/questions/3631220/fix-to-get-smooth-scrolling-in-ema
-(setq scroll-step 1
-      scroll-margin 1
+;; https://stackoverflow.com/questions/3631220/fix-to-get-smooth-scrolling-in-emacs
+(setq scroll-margin 1
       scroll-conservatively 101
       scroll-preserve-screen-position 'always)
 
-;; Don't show menu bar
-;; (menu-bar-mode 0)
-
-;; Don't show tool bar
-;; (tool-bar-mode 0)
+;; Loads frame settings. This is natively different on different
+;; platforms. Therefore the content is offloaded to separate file.
+(require 'init-frame)
 
 ;; Minimize show fringe.
 ;;
@@ -222,7 +222,7 @@
           latex-mode
           python-mode) . eglot-ensure))
 
-
+;; Hook to enable Corfu in minibuffer.
 (defun corfu-enable-in-minibuffer ()
   "Enable Corfu in the minibuffer if `completion-at-point` is bound."
   (when (where-is-internal #'completion-at-point (list (current-local-map)))
@@ -236,16 +236,12 @@
   :custom
   (corfu-cycle t)
   (corfu-auto t)
-  ;; Select first entry by default
-  (corfu-preselect 'prompt)
 
   :bind
   (:map corfu-map
 	("RET" . nil)
-	([remap move-beginning-of-line] . nil)
-	([remap move-end-of-line] . nil)
-        ([remap next-line] . nil)
-        ([remap previous-line] . nil)
+	([move-beginning-of-line] . nil)
+	([move-end-of-line] . nil)
         ("M-SPC" . corfu-insert-separator))
 
   :init
