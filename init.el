@@ -48,9 +48,6 @@
 ;; Use space for all indentation
 (setq-default indent-tabs-mode nil)
 
-;; Turn off the electric indent mode
-(electric-indent-mode -1)
-
 ;; Provide `:straight t` in every call to `use-package`.
 (defvar straight-use-package-by-default t)
 
