@@ -9,18 +9,32 @@
       '("~/.config/emacs/auth-info"
         "~/.emacs.d/auth-info"))
 
+;; Don't show scroll bar
+(scroll-bar-mode 0)
+
 ;; Don't "jump" when move to edges of the screen. See also:
 ;; https://stackoverflow.com/questions/3631220/fix-to-get-smooth-scrolling-in-ema
 (setq scroll-step 1
       scroll-margin 1
-      redisplay-dont-pause t
       scroll-conservatively 101
-      scroll-preserve-screen-position 1)
+      scroll-preserve-screen-position 'always)
 
-(menu-bar-mode 0)
-(scroll-bar-mode 0)
-(tool-bar-mode 0)
-(fringe-mode 0)
+;; Don't show menu bar
+;; (menu-bar-mode 0)
+
+;; Don't show tool bar
+;; (tool-bar-mode 0)
+
+;; Minimize show fringe.
+;;
+;; Instead setting the width of the fringe to 0, we set its width to be 1.
+;; This is to prevent Emacs from displaying annoying '$' symbol at the
+;; end/begin of a line when the line is truncated.
+(fringe-mode 1)
+
+;; Remove the fringe indicator for line truncation.
+(setq-default fringe-indicator-alist
+              (assq-delete-all 'truncation fringe-indicator-alist))
 
 ;; Disable cursor blinking
 (blink-cursor-mode 0)
@@ -141,15 +155,17 @@
   :init (indent-guide-global-mode)
   :config (setq indent-guide-char "▏"))
 
-;; Undo tree
-;; (use-package undo-tree
-;;  :config (global-undo-tree-mode t))
+;; Vundo (undo tree)
+(use-package vundo)
 
 ;; Git intergration
 (use-package magit)
 
 ;; GitHub intergration
 (use-package forge :after magit)
+
+;; Terminal
+(use-package vterm)
 
 ;; Which-keys
 (use-package which-key
@@ -178,11 +194,6 @@
         '(read-only t cursor-intangible t face minibuffer-prompt))
   (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
-  ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
-  ;; Vertico commands are hidden in normal buffers.
-  ;; (setq read-extended-command-predicate
-  ;;       #'command-completion-default-include-p)
-
   ;; Enable recursive minibuffers
   (setq enable-recursive-minibuffers t)
   
@@ -207,25 +218,63 @@
   :straight (:host github
              :repo "Ladicle/consult-tramp"))
 
-;; Syntax highlighting
-(use-package tree-sitter :init (global-tree-sitter-mode))
-(use-package tree-sitter-langs)
-
 ;; LSP-integration
 (use-package eglot
   :hook ((rust-mode
           c++-mode
-          latex-mode) . eglot-ensure))
+          latex-mode
+          python-mode) . eglot-ensure))
+
+
+(defun corfu-enable-in-minibuffer ()
+  "Enable Corfu in the minibuffer if `completion-at-point` is bound."
+  (when (where-is-internal #'completion-at-point (list (current-local-map)))
+    (setq-local corfu-echo-delay nil
+                corfu-popupinfo-mode nil)
+    (corfu-mode 1)))
 
 ;; At point completion framework
 (use-package corfu
-  :custom (corfu-auto t)
+  ;; Enable auto completion
+  :custom
+  (corfu-cycle t)
+  (corfu-auto t)
+  ;; Select first entry by default
+  (corfu-preselect 'prompt)
+
   :bind
   (:map corfu-map
 	("RET" . nil)
 	([remap move-beginning-of-line] . nil)
-	([remap move-end-of-line] . nil))
-  :init (global-corfu-mode))
+	([remap move-end-of-line] . nil)
+        ([remap next-line] . nil)
+        ([remap previous-line] . nil)
+        ("M-SPC" . corfu-insert-separator))
+
+  :init
+  (global-corfu-mode)
+  (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer))
+
+;; Add documentation to minibuffer item.
+(use-package marginalia
+  :bind (:map minibuffer-local-map ("M-A" . marginalia-cycle))
+  :init (marginalia-mode))
+
+;; Code actions, but not restricted to language servers.
+(use-package embark
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command)
+  (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
+  :config
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+
+(use-package embark-consult
+  :ensure t
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
 ;; Completion sources
 (use-package cape
@@ -241,9 +290,6 @@
 ;; Show ElDoc in childframe
 (use-package eldoc-box
   :config (eldoc-box-hover-at-point-mode))
-
-;; Email client
-;; (use-package mu4e)
 
 ;; Hexical mode
 (use-package nhexl-mode)
@@ -273,6 +319,7 @@
         '((output-dvi "xdvi")
           (output-pdf "Zathura")
           (output-html "xdg-open"))))
+
 ;; PDF
 (use-package pdf-tools
   :straight (:host github
