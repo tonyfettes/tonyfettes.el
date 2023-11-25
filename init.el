@@ -1,4 +1,4 @@
-;;; init.el --- tonyfettes' Emacs configuration
+;;; init.el --- tonyfettes' Emacs configuration -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
