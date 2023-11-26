@@ -352,7 +352,10 @@
 (use-package z3-mode)
 
 ;; Proof General, for Coq
-(use-package proof-general)
+(use-package proof-general
+  :config
+  ;; Ask opam for path to coqtop. Sould work across platform.
+  (setq coq-prog-name (car (process-lines "opam" "exec" "--switch=coq" "which" "coqtop"))))
 
 (provide 'init)
 
