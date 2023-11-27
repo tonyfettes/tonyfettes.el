@@ -357,6 +357,16 @@
   ;; Ask opam for path to coqtop. Sould work across platform.
   (setq coq-prog-name (car (process-lines "opam" "exec" "--switch=coq" "which" "coqtop"))))
 
+;; company-coq
+(use-package company-coq
+  :config
+  (setq company-coq-disabled-features '(spinner company company-defaults))
+  (setq completion-at-point-functions
+        (mapcar #'cape-company-to-capf
+                (list #'company-coq-master-backend
+                      #'company-coq-choices-backend
+                      #'company-coq-math-symbols-backend))))
+
 (provide 'init)
 
 ;;; init.el ends here
