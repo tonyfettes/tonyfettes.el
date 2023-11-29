@@ -232,6 +232,22 @@
           latex-mode
           python-mode) . eglot-ensure))
 
+;; Flymake
+(use-package flymake
+  :straight (:type built-in)
+  :config
+  (setq flymake-fringe-indicator-position nil))
+
+;; Flycheck
+(use-package flycheck
+  :ensure t
+  :after (flycheck eglot)
+  :init (global-flycheck-mode))
+
+(use-package flycheck-eglot
+  :config
+  (global-flycheck-eglot-mode 1))
+
 ;; Hook to enable Corfu in minibuffer.
 (defun corfu-enable-in-minibuffer ()
   "Enable Corfu in the minibuffer if `completion-at-point` is bound."
