@@ -305,6 +305,7 @@
 
 ;; OCaml
 (use-package tuareg)
+(use-package opam-switch-mode)
 
 ;; Reason
 (use-package reason-mode
