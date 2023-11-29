@@ -4,13 +4,23 @@
 
 ;; This is tonyfettes' Emacs configuration
 
+;;; Code:
+
+;; Don't put ~ file near the source.
+(setq backup-directory-alist
+      '(("." . (locate-user-emacs-file "backup"))))
+
+(setq backup-by-copying t)
+
+;; Don't put #.# auto save files near the sources.
+(setq auto-save-file-name-transforms
+      `(("." ,(locate-user-emacs-file "auto-save/") t)))
+
 ;; Add "lisp" to load-path
 (add-to-list 'load-path (locate-user-emacs-file "lisp"))
 
 ;; Set authenticaion source
-(setq auth-sources
-      '("~/.config/emacs/auth-info"
-        "~/.emacs.d/auth-info"))
+(setq auth-sources `(,(locate-user-emacs-file "auth-info")))
 
 ;; Don't show scroll bar
 (scroll-bar-mode 0)
