@@ -166,7 +166,9 @@
 (use-package vundo)
 
 ;; Git intergration
-(use-package magit)
+(use-package magit
+  :config
+  (setq magit-section-visibility-indicator '("…" . t)))
 
 ;; GitHub intergration
 (use-package forge :after magit)
@@ -260,7 +262,9 @@
 (use-package flycheck
   :ensure t
   :after (flycheck eglot)
-  :init (global-flycheck-mode))
+  :init (global-flycheck-mode)
+  :config
+  (setq flycheck-indication-mode 'nil))
 
 (use-package flycheck-eglot
   :config
@@ -309,6 +313,7 @@
 
 (use-package embark-consult
   :ensure t
+  :after (embark consult)
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
@@ -389,7 +394,7 @@
   (with-eval-after-load "org"
     (define-key org-mode-map (kbd "C-c c") 'ob-sagemath-execute-async)))
 
-;; gnuplot 
+;; gnuplot
 (use-package gnuplot)
 
 ;; Z3 SMT-LIB
