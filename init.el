@@ -246,7 +246,9 @@
   :hook ((rust-mode
           c++-mode
           latex-mode
-          python-mode) . eglot-ensure))
+          python-mode
+          reason-mode
+          tuareg-mode) . eglot-ensure))
 
 ;; Flymake
 (use-package flymake
