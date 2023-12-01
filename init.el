@@ -171,6 +171,22 @@
 ;; GitHub intergration
 (use-package forge :after magit)
 
+;; Diff highlight
+(use-package diff-hl
+  :init
+  (global-diff-hl-mode)
+  (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+  :config
+  (diff-hl-flydiff-mode)
+  (diff-hl-margin-mode)
+  (setq diff-hl-margin-symbols-alist
+        '((insert . "")
+          (delete . "-")
+          (change . " ")
+          (unknown . "?")
+          (ignored . "i"))))
+
 ;; Terminal
 (use-package vterm)
 
