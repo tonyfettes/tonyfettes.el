@@ -6,6 +6,10 @@
 
 ;;; Code:
 
+;; Use dedicate file for custom.
+(setq custom-file (locate-user-emacs-file "custom.el"))
+(load custom-file)
+
 ;; Don't put ~ file near the source.
 (setq backup-directory-alist
       '(("." . (locate-user-emacs-file "backup"))))
