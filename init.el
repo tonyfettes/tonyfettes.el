@@ -187,9 +187,9 @@
   (diff-hl-flydiff-mode)
   (diff-hl-margin-mode)
   (setq diff-hl-margin-symbols-alist
-        '((insert . "")
-          (delete . "-")
-          (change . " ")
+        '((insert . "▎")
+          (delete . "▔")
+          (change . "▎")
           (unknown . "?")
           (ignored . "i"))))
 
