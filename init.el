@@ -47,8 +47,7 @@
 (fringe-mode 1)
 
 ;; Remove the fringe indicator for line truncation.
-(setq-default fringe-indicator-alist
-              (assq-delete-all 'truncation fringe-indicator-alist))
+(setq-default fringe-indicator-alist '())
 
 ;; Disable cursor blinking
 (blink-cursor-mode 0)
