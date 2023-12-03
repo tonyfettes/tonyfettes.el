@@ -85,6 +85,17 @@
 
 (use-package restart-emacs)
 
+;; Hide minor mode in mode line.
+(use-package delight)
+
+(use-package autorevert
+  :straight (:type built-in)
+  :delight auto-revert-mode)
+
+(use-package eldoc
+  :straight (:type built-in)
+  :delight)
+
 ;; Org mode
 (use-package org
   :straight (:type built-in)
@@ -163,8 +174,12 @@
 
 ;; Indent guide
 (use-package indent-guide
+  :delight
   :init (indent-guide-global-mode)
   :config (setq indent-guide-char "▏"))
+
+;; Take screenshot of code
+(use-package screenshot)
 
 ;; Vundo (undo tree)
 (use-package vundo)
@@ -198,6 +213,7 @@
 
 ;; Which-keys
 (use-package which-key
+  :delight
   :config (which-key-mode))
 
 ;; Vertical completion in minibuffer
