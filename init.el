@@ -18,7 +18,7 @@
 
 ;; Don't put #.# auto save files near the sources.
 (setq auto-save-file-name-transforms
-      `(("." ,(locate-user-emacs-file "auto-save/") t)))
+      `((".*" ,(locate-user-emacs-file "auto-save/") t)))
 
 ;; Add "lisp" to load-path
 (add-to-list 'load-path (locate-user-emacs-file "lisp"))
