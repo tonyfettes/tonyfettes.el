@@ -427,13 +427,15 @@
 
 ;; company-coq
 (use-package company-coq
+  :delight company-coq-mode
   :config
   (setq company-coq-disabled-features '(spinner company company-defaults))
   (setq completion-at-point-functions
         (mapcar #'cape-company-to-capf
                 (list #'company-coq-master-backend
                       #'company-coq-choices-backend
-                      #'company-coq-math-symbols-backend))))
+                      #'company-coq-math-symbols-backend)))
+  :hook (coq-mode . company-coq-mode))
 
 (provide 'init)
 
