@@ -446,6 +446,8 @@
                       #'company-coq-math-symbols-backend)))
   :hook (coq-mode . company-coq-mode))
 
+(server-start)
+
 (provide 'init)
 
 ;;; init.el ends here
