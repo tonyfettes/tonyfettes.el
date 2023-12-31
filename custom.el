@@ -19,6 +19,7 @@
  '(flycheck-error ((t (:underline "Red1"))))
  '(flycheck-info ((t (:underline "ForestGreen"))))
  '(flycheck-warning ((t (:underline "DarkOrange"))))
+ '(fringe ((t (:inherit default))))
  '(indent-guide-face ((t (:foreground "dark gray" :slant normal)))))
 
 (provide 'custom)

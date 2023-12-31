@@ -47,7 +47,7 @@
 ;; Instead setting the width of the fringe to 0, we set its width to be 1.
 ;; This is to prevent Emacs from displaying annoying '$' symbol at the
 ;; end/begin of a line when the line is truncated.
-(fringe-mode 1)
+;;(fringe-mode 1)
 
 ;; Remove the fringe indicator for line truncation.
 (setq-default fringe-indicator-alist '())
@@ -201,14 +201,14 @@
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
   :config
-  (diff-hl-flydiff-mode)
-  (diff-hl-margin-mode)
-  (setq diff-hl-margin-symbols-alist
-        '((insert . "▎")
-          (delete . "▔")
-          (change . "▎")
-          (unknown . "?")
-          (ignored . "i"))))
+  (diff-hl-flydiff-mode))
+  ;; (diff-hl-margin-mode)
+  ;; (setq diff-hl-margin-symbols-alist
+  ;;       '((insert . "▎")
+  ;;         (delete . "▔")
+  ;;         (change . "▎")
+  ;;         (unknown . "?")
+  ;;         (ignored . "i"))))
 
 ;; Terminal
 (use-package vterm)
