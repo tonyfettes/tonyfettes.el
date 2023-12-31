@@ -448,8 +448,19 @@
         (mapcar #'cape-company-to-capf
                 (list #'company-coq-master-backend
                       #'company-coq-choices-backend
-                      #'company-coq-math-symbols-backend)))
+                      #'company-math-symbols-latex
+                      #'company-math-symbols-unicode)))
   :hook (coq-mode . company-coq-mode))
+
+(use-package js
+  :straight (:type built-in)
+  :config
+  (setq js-indent-level 2))
+
+(use-package css-mode
+  :straight (:type built-in)
+  :config
+  (setq css-indent-offset 2))
 
 (server-start)
 
