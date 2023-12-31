@@ -178,10 +178,10 @@
 ;;   (setq org-caldav-files ""))
 
 ;; Indent guide
-(use-package indent-guide
-  :delight
-  :init (indent-guide-global-mode)
-  :config (setq indent-guide-char "▏"))
+(use-package highlight-indent-guides
+  :init
+  (setq highlight-indent-guides-method 'character)
+  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
 
 ;; Take screenshot of code
 (use-package screenshot)
