@@ -64,6 +64,9 @@
 ;; Use space for all indentation
 (setq-default indent-tabs-mode nil)
 
+;; Set default tab width to be 2.
+(setq-default tab-width 2)
+
 ;; Provide `:straight t` in every call to `use-package`.
 (defvar straight-use-package-by-default t)
 
