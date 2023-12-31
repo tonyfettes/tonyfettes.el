@@ -29,6 +29,9 @@
 ;; Don't show scroll bar
 (scroll-bar-mode 0)
 
+;; Don't show tool bar
+(tool-bar-mode -1)
+
 ;; Don't "jump" when move to edges of the screen. See also:
 ;; https://stackoverflow.com/questions/3631220/fix-to-get-smooth-scrolling-in-emacs
 (setq scroll-margin 1
