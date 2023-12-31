@@ -271,6 +271,15 @@
           reason-mode
           tuareg-mode) . eglot-ensure))
 
+;; Tree-sitter
+(use-package treesit
+  :straight (:type built-in)
+  :config
+  (setq treesit-language-source-alist
+        '((moonbit "https://github.com/bzy-debug/tree-sitter-moonbit")
+          (typescript "https://github.com/tree-sitter/tree-sitter-typescript")
+          (ocaml "https://github.com/tree-sitter/tree-sitter-ocaml"))))
+
 ;; Flymake
 (use-package flymake
   :straight (:type built-in)
