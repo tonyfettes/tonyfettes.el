@@ -186,6 +186,8 @@
 ;; Take screenshot of code
 (use-package screenshot)
 
+(use-package tramp)
+
 ;; Vundo (undo tree)
 (use-package vundo)
 
