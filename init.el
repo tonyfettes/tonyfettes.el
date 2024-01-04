@@ -484,6 +484,9 @@
   :config
   (setq css-indent-offset 2))
 
+(load-file (let ((coding-system-for-read 'utf-8))
+                (shell-command-to-string "agda-mode locate")))
+
 (server-start)
 
 (provide 'init)
