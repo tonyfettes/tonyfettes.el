@@ -142,7 +142,10 @@
   ;; Do not evaluate code blocks when exporting.
   (setq org-export-babel-evaluate nil)
   ;; Display images after evaluating code blocks
-  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images))
+  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+
+  ;; Render checkbox when export to HTML
+  (setq org-html-checkbox-type 'html))
 
 (use-package ox-latex
   :straight (:type built-in)
