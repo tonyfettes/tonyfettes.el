@@ -504,6 +504,11 @@ unwanted space when exporting org-mode to html."
 (load-file (let ((coding-system-for-read 'utf-8))
                 (shell-command-to-string "agda-mode locate")))
 
+(use-package electric
+  :straight (:type built-in)
+  :config
+  (setq electric-indent-inhibit t))
+
 (server-start)
 
 (provide 'init)
