@@ -88,6 +88,11 @@
 ;; use-package. See https://github.com/jwiegley/use-package
 (straight-use-package 'use-package)
 
+(use-package exec-path-from-shell
+  :init
+  (when (daemonp)
+    (exec-path-from-shell-initialize)))
+
 (use-package restart-emacs)
 
 ;; Hide minor mode in mode line.
