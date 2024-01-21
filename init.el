@@ -6,9 +6,23 @@
 
 ;;; Code:
 
+(require 'package)
+(package-initialize)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
+
 ;; Use dedicate file for custom.
 (setq custom-file (locate-user-emacs-file "custom.el"))
 (load custom-file)
+
+;; macOS specific settings
+(when (eq system-type 'darwin)
+  ;; Make the titlebar transparent, i.e. has the same color has the background.
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+  (add-to-list 'default-frame-alist '(ns-appearance . light)))
+
+;; Stop showing splash screen and messages on start up
+(setq inhibit-startup-screen t)
 
 ;; Don't put ~ file near the source.
 (setq backup-directory-alist
@@ -38,17 +52,6 @@
       scroll-conservatively 101
       scroll-preserve-screen-position 'always)
 
-;; Loads frame settings. This is natively different on different
-;; platforms. Therefore the content is offloaded to separate file.
-(require 'init-frame)
-
-;; Minimize show fringe.
-;;
-;; Instead setting the width of the fringe to 0, we set its width to be 1.
-;; This is to prevent Emacs from displaying annoying '$' symbol at the
-;; end/begin of a line when the line is truncated.
-;;(fringe-mode 1)
-
 ;; Remove the fringe indicator for line truncation.
 (setq-default fringe-indicator-alist '())
 
@@ -67,48 +70,26 @@
 ;; Set default tab width to be 2.
 (setq-default tab-width 2)
 
-;; Provide `:straight t` in every call to `use-package`.
-(defvar straight-use-package-by-default t)
+(setopt use-package-always-ensure t)
 
-;; Use straight.el as package manager.
-;; See https://github.com/radian-software/straight.el
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 6))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
-;; use-package. See https://github.com/jwiegley/use-package
-(straight-use-package 'use-package)
-
+;; Automatically load environment variables from shell when in daemon mode.
 (use-package exec-path-from-shell
   :init
   (when (daemonp)
     (exec-path-from-shell-initialize)))
 
+;; Quick commands to restart Emacs.
 (use-package restart-emacs)
 
 ;; Hide minor mode in mode line.
 (use-package delight)
 
-(use-package autorevert
-  :straight (:type built-in)
-  :delight auto-revert-mode)
+(use-package autorevert :delight auto-revert-mode)
 
-(use-package eldoc
-  :straight (:type built-in)
-  :delight)
+(use-package eldoc :delight)
 
 ;; Org mode
 (use-package org
-  :straight (:type built-in)
   :config
   ;; Startup with indentation
   (setq org-startup-indented t)
@@ -165,7 +146,7 @@ unwanted space when exporting org-mode to html."
       (ad-set-arg 1 fixed-contents))))
 
 (use-package ox-latex
-  :straight (:type built-in)
+  :ensure nil
   :config
   (add-to-list 'org-latex-classes
                '("ctexart"
@@ -178,33 +159,20 @@ unwanted space when exporting org-mode to html."
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
-(use-package org-protocol
-  :straight (:type built-in))
+(use-package org-protocol :ensure nil)
+
+(use-package hide-mode-line
+  :init
+  (global-hide-mode-line-mode))
+
+(use-package org-present)
 
 (use-package cdlatex)
 
-;; Calendar interface
-;; (use-package calfw)
-;; (use-package calfw-org)
-;; (use-package calfw-ical)
-
-;;; I now use org-icalendar-combine-agenda-files for exporting ics and
-;;; upload it to radicale server using curl.
-;; (use-package org-caldav
-;;   :config
-;;   (setq org-caldav-url "https://api.tonyfettes.com/radicale")
-;;   (setq org-caldav-calendar-id "main")
-;;   (setq org-caldav-inbox "~/personal/org/caldav-inbox.org")
-;;   (setq org-caldav-files ""))
-
 ;; Indent guide
-(use-package highlight-indent-guides
+(use-package indent-guide
   :init
-  (setq highlight-indent-guides-method 'character)
-  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
-
-;; Take screenshot of code
-(use-package screenshot)
+  (indent-guide-global-mode))
 
 (use-package tramp)
 
@@ -220,6 +188,8 @@ unwanted space when exporting org-mode to html."
 (use-package forge
   :after magit
   :config
+
+  ;; Define class for HTTP gitlab repository.
   (defclass forge-gitlab-http-repository (forge-gitlab-repository)
     ((issues-url-format         :initform "http://%h/%o/%n/issues")
      (issue-url-format          :initform "http://%h/%o/%n/issues/%i")
@@ -244,13 +214,6 @@ unwanted space when exporting org-mode to html."
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
   :config
   (diff-hl-flydiff-mode))
-  ;; (diff-hl-margin-mode)
-  ;; (setq diff-hl-margin-symbols-alist
-  ;;       '((insert . "▎")
-  ;;         (delete . "▔")
-  ;;         (change . "▎")
-  ;;         (unknown . "?")
-  ;;         (ignored . "i"))))
 
 ;; Terminal
 (use-package vterm)
@@ -304,8 +267,7 @@ unwanted space when exporting org-mode to html."
 
 ;; Select tramp using consult
 (use-package consult-tramp
-  :straight (:host github
-             :repo "Ladicle/consult-tramp"))
+  :vc (consult-tramp :url "https://github.com/Ladicle/consult-tramp"))
 
 ;; LSP-integration
 (use-package eglot
@@ -318,7 +280,7 @@ unwanted space when exporting org-mode to html."
 
 ;; Tree-sitter
 (use-package treesit
-  :straight (:type built-in)
+  :ensure nil
   :config
   (setq treesit-language-source-alist
         '((moonbit "https://github.com/bzy-debug/tree-sitter-moonbit")
@@ -327,13 +289,11 @@ unwanted space when exporting org-mode to html."
 
 ;; Flymake
 (use-package flymake
-  :straight (:type built-in)
   :config
   (setq flymake-fringe-indicator-position nil))
 
 ;; Flycheck
 (use-package flycheck
-  :ensure t
   :after (flycheck eglot)
   :init (global-flycheck-mode)
   :config
@@ -360,9 +320,9 @@ unwanted space when exporting org-mode to html."
 
   :bind
   (:map corfu-map
-	("RET" . nil)
-	([move-beginning-of-line] . nil)
-	([move-end-of-line] . nil)
+	      ("RET" . nil)
+	      ([move-beginning-of-line] . nil)
+	      ([move-end-of-line] . nil)
         ("M-SPC" . corfu-insert-separator))
 
   :init
@@ -414,7 +374,8 @@ unwanted space when exporting org-mode to html."
 (use-package zig-mode)
 
 ;; OCaml
-(use-package tuareg)
+(use-package tuareg
+  :hook (tuareg-mode .eglot-ensure))
 (use-package opam-switch-mode)
 
 ;; Reason
@@ -423,7 +384,7 @@ unwanted space when exporting org-mode to html."
 
 ;; LaTeX
 (use-package tex
-  :straight auctex
+  :ensure auctex
   :config
   (setq TeX-auto-save t)
   (setq TeX-parse-self t)
@@ -435,21 +396,18 @@ unwanted space when exporting org-mode to html."
           (output-html "xdg-open"))))
 
 ;; PDF
+(use-package tablist)
+
 (use-package pdf-tools
-  :straight (:host github
-             :repo "dalanicolai/pdf-tools"
-             :branch "pdf-roll"
-             :files ("lisp/*.el"
-                     "README"
-                     ("build" "Makefile")
-                     ("build" "server")
-                     (:exclude "lisp/tablist.el" "lisp/tablist-filter.el")))
-  :requires image-roll)
+  :vc (pdf-tools :url "https://github.com/dalanicolai/pdf-tools"
+                 :branch "pdf-roll"
+                 :lisp-dir "lisp/")
+  :init (pdf-tools-install))
 
 ;; Smoother PDF/image scroll
 (use-package image-roll
-  :straight (:host github
-             :repo "dalanicolai/image-roll.el"))
+  :vc (image-roll :url "https://github.com/dalanicolai/image-roll.el")
+  :hook (pdf-view-mode . pdf-view-roll-minor-mode))
 
 ;; Markdown
 (use-package markdown-mode)
@@ -492,20 +450,24 @@ unwanted space when exporting org-mode to html."
   :hook (coq-mode . company-coq-mode))
 
 (use-package js
-  :straight (:type built-in)
   :config
   (setq js-indent-level 2))
 
 (use-package css-mode
-  :straight (:type built-in)
   :config
   (setq css-indent-offset 2))
 
 (load-file (let ((coding-system-for-read 'utf-8))
-                (shell-command-to-string "agda-mode locate")))
+             (shell-command-to-string "agda-mode locate")))
+
+;;; auto-load agda-mode for .agda and .lagda.md
+(setq auto-mode-alist
+      (append
+       '(("\\.agda\\'" . agda2-mode)
+         ("\\.lagda.md\\'" . agda2-mode))
+       auto-mode-alist))
 
 (use-package electric
-  :straight (:type built-in)
   :config
   (setq electric-indent-inhibit t))
 
