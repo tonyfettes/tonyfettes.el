@@ -64,6 +64,9 @@
 ;; Highlight current cursorline
 (global-hl-line-mode)
 
+;; Hide mode line
+(setq-default mode-line-format nil)
+
 ;; Use space for all indentation
 (setq-default indent-tabs-mode nil)
 
@@ -160,10 +163,6 @@ unwanted space when exporting org-mode to html."
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
 (use-package org-protocol :ensure nil)
-
-(use-package hide-mode-line
-  :init
-  (global-hide-mode-line-mode))
 
 (use-package org-present)
 
