@@ -21,6 +21,16 @@
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . light)))
 
+;; GNU/Linux specific settings
+(when (eq system-type 'gnu/linux)
+  (menu-bar-mode -1))
+
+;; Set window divider
+(setq-default window-divider-default-places t)
+(setq-default window-divider-default-right-width 1)
+(setq-default window-divider-default-bottom-width 1)
+(window-divider-mode 1)
+
 ;; Stop showing splash screen and messages on start up
 (setq inhibit-startup-screen t)
 
