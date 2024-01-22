@@ -19,7 +19,10 @@
 (when (eq system-type 'darwin)
   ;; Make the titlebar transparent, i.e. has the same color has the background.
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-  (add-to-list 'default-frame-alist '(ns-appearance . light)))
+  (add-to-list 'default-frame-alist '(ns-appearance . light))
+  (set-fontset-font t 'han (font-spec :family "PingFang SC"))
+  (set-fontset-font t 'cjk-misc (font-spec :family "PingFang SC"))
+  (set-face-attribute 'default nil :family "SF Mono"))
 
 ;; GNU/Linux specific settings
 (when (eq system-type 'gnu/linux)
@@ -146,17 +149,18 @@
   ;; Render checkbox when export to HTML
   (setq org-html-checkbox-type 'html)
 
-  (defadvice org-html-paragraph (before org-html-paragraph-advice
-                                        (paragraph contents info) activate)
+  (defun org-html-paragraph-join-chinese (paragraph contents info)
     "Join consecutive Chinese lines into a single long line without
 unwanted space when exporting org-mode to html."
-    (let* ((origin-contents (ad-get-arg 1))
+    (let* ((origin-contents (ad-get-argument 1))
            (fix-regexp "[[:multibyte:]]")
            (fixed-contents
             (replace-regexp-in-string
              (concat
               "\\(" fix-regexp "\\) *\n *\\(" fix-regexp "\\)") "\\1\\2" origin-contents)))
-      (ad-set-arg 1 fixed-contents))))
+      (ad-set-argument 1 fixed-contents)))
+
+  (advice-add 'org-html-paragraph :before #'org-html-paragraph-join-chinese))
 
 (use-package ox-latex
   :ensure nil
@@ -225,7 +229,13 @@ unwanted space when exporting org-mode to html."
   (diff-hl-flydiff-mode))
 
 ;; Terminal
-(use-package vterm)
+(use-package vterm
+  :config
+  (defun vterm-disable-hl-line-mode ()
+    (hl-line-mode 'toggle)
+    (hl-line-mode -1))
+
+  :hook (vterm-mode . vterm-disable-hl-line-mode))
 
 ;; Which-keys
 (use-package which-key
