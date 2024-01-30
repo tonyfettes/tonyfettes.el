@@ -152,13 +152,13 @@
   (defun org-html-paragraph-join-chinese (paragraph contents info)
     "Join consecutive Chinese lines into a single long line without
 unwanted space when exporting org-mode to html."
-    (let* ((origin-contents (ad-get-argument 1))
+    (let* ((origin-contents contents)
            (fix-regexp "[[:multibyte:]]")
            (fixed-contents
             (replace-regexp-in-string
              (concat
               "\\(" fix-regexp "\\) *\n *\\(" fix-regexp "\\)") "\\1\\2" origin-contents)))
-      (ad-set-argument 1 fixed-contents)))
+      (setq contents fixed-contents)))
 
   (advice-add 'org-html-paragraph :before #'org-html-paragraph-join-chinese))
 
