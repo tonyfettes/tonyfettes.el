@@ -20,9 +20,9 @@
   ;; Make the titlebar transparent, i.e. has the same color has the background.
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . light))
-  (set-fontset-font t 'han (font-spec :family "PingFang SC"))
-  (set-fontset-font t 'cjk-misc (font-spec :family "PingFang SC"))
-  (set-face-attribute 'default nil :family "SF Mono"))
+  (set-fontset-font t 'han (font-spec :family "Sarasa Mono SC"))
+  (set-fontset-font t 'cjk-misc (font-spec :family "Sarasa Mono SC"))
+  (set-face-attribute 'default nil :family "Sarasa Mono SC"))
 
 ;; GNU/Linux specific settings
 (when (eq system-type 'gnu/linux)
