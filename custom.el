@@ -18,6 +18,10 @@
             pdf-tools proof-general reason-mode restart-emacs
             rust-mode tablist tuareg vc-use-package vertico vterm
             vundo which-key z3-mode zig-mode))
+ '(package-vc-selected-packages
+   '((image-roll :url "https://github.com/dalanicolai/image-roll.el")
+     (pdf-tools :url "https://github.com/dalanicolai/pdf-tools"
+                :branch "pdf-roll" :lisp-dir "lisp/")))
  '(warning-minimum-level :emergency))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

@@ -291,10 +291,6 @@ unwanted space when exporting org-mode to html."
 (use-package consult
   :hook (completion-list-mode . consult-preview-at-point-mode))
 
-;; Select tramp using consult
-(use-package consult-tramp
-  :vc (consult-tramp :url "https://github.com/Ladicle/consult-tramp"))
-
 ;; LSP-integration
 (use-package eglot
   :hook ((rust-mode
