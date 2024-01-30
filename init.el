@@ -412,27 +412,35 @@ unwanted space when exporting org-mode to html."
 (use-package tex
   :ensure auctex
   :config
+  ;; Don't create `auto/' subdirectory.
   (setq TeX-auto-save t)
+  ;; Automatic parse the TeX file on loading.
   (setq TeX-parse-self t)
+  ;; Always ask for master TeX file.
   (setq-default TeX-master nil)
   (setq TeX-PDF-mode t)
   (setq TeX-view-program-selection
         '((output-dvi "xdvi")
           (output-pdf "Zathura")
-          (output-html "xdg-open"))))
+          (output-html "xdg-open")))
+  ;; Auto-revert buffer after compilation
+  (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
 
 ;; PDF
 (use-package tablist)
 
 (use-package pdf-tools
   :vc (pdf-tools :url "https://github.com/dalanicolai/pdf-tools"
+                 :rev :newest
                  :branch "pdf-roll"
                  :lisp-dir "lisp/")
   :init (pdf-tools-install))
 
 ;; Smoother PDF/image scroll
 (use-package image-roll
-  :vc (image-roll :url "https://github.com/dalanicolai/image-roll.el")
+  :vc (image-roll
+       :url "https://github.com/dalanicolai/image-roll.el"
+       :rev :newest)
   :hook (pdf-view-mode . pdf-view-roll-minor-mode))
 
 ;; Markdown
