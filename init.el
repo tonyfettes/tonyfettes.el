@@ -86,6 +86,13 @@
 ;; Set default tab width to be 2.
 (setq-default tab-width 2)
 
+;; Allow repetition of some keystroks. for example `C-x o o o` stands
+;; for 3 `C-x o`.
+(repeat-mode 1)
+
+;; Replace selected region when pasting
+(delete-selection-mode 1)
+
 (setopt use-package-always-ensure t)
 
 ;; Automatically load environment variables from shell when in daemon mode.
