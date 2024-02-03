@@ -298,7 +298,8 @@ unwanted space when exporting org-mode to html."
           latex-mode
           python-mode
           reason-mode
-          tuareg-mode) . eglot-ensure))
+          tuareg-mode
+          latex-mode) . eglot-ensure))
 
 ;; Tree-sitter
 (use-package treesit
@@ -414,30 +415,23 @@ unwanted space when exporting org-mode to html."
   (setq TeX-parse-self t)
   ;; Always ask for master TeX file.
   (setq-default TeX-master nil)
-  (setq TeX-PDF-mode t)
-  (setq TeX-view-program-selection
-        '((output-dvi "xdvi")
-          (output-pdf "Zathura")
-          (output-html "xdg-open")))
-  ;; Auto-revert buffer after compilation
-  (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
+  ;; Use pdf-tools to open PDF files
+  (setq TeX-view-program-selection '((output-pdf "PDF Tools")))
+  ;; Update PDF buffers after successful LaTeX runs
+  (add-hook 'TeX-after-compilation-finished-functions
+            #'TeX-revert-document-buffer))
 
 ;; PDF
 (use-package tablist)
 
 (use-package pdf-tools
-  :vc (pdf-tools :url "https://github.com/dalanicolai/pdf-tools"
-                 :rev :newest
-                 :branch "pdf-roll"
-                 :lisp-dir "lisp/")
   :init (pdf-tools-install))
 
 ;; Smoother PDF/image scroll
 (use-package image-roll
   :vc (image-roll
        :url "https://github.com/dalanicolai/image-roll.el"
-       :rev :newest)
-  :hook (pdf-view-mode . pdf-view-roll-minor-mode))
+       :rev :newest))
 
 ;; Markdown
 (use-package markdown-mode)
@@ -494,7 +488,8 @@ unwanted space when exporting org-mode to html."
 (setq auto-mode-alist
       (append
        '(("\\.agda\\'" . agda2-mode)
-         ("\\.lagda.md\\'" . agda2-mode))
+         ("\\.lagda.md\\'" . agda2-mode)
+         ("\\.pdf\\'" . pdf-view-mode))
        auto-mode-alist))
 
 (use-package electric
