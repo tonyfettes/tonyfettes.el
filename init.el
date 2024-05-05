@@ -28,6 +28,10 @@
 (when (eq system-type 'gnu/linux)
   (menu-bar-mode -1))
 
+;; Disable beep
+(setq visible-bell t)
+(setq ring-bell-function 'ignore)
+
 ;; Set window divider
 (setq-default window-divider-default-places t)
 (setq-default window-divider-default-right-width 1)
