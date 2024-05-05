@@ -222,6 +222,7 @@ unwanted space when exporting org-mode to html."
 ;; Git intergration
 (use-package magit
   :config
+  (setq vc-handled-backends nil)
   (setq magit-section-visibility-indicator '("…" . t)))
 
 ;; GitHub/GitLab intergration
