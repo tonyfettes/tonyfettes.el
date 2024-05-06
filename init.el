@@ -90,14 +90,15 @@
 ;; Set default tab width to be 2.
 (setq-default tab-width 2)
 
-;; Allow repetition of some keystroks. for example `C-x o o o` stands
+;; Allow repetition of some keystroks. For example `C-x o o o` stands
 ;; for 3 `C-x o`.
 (repeat-mode 1)
 
 ;; Replace selected region when pasting
 (delete-selection-mode 1)
 
-(setopt use-package-always-ensure t)
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
 
 ;; Automatically load environment variables from shell when in daemon mode.
 (use-package exec-path-from-shell
@@ -160,7 +161,8 @@
   ;; Render checkbox when export to HTML
   (setq org-html-checkbox-type 'html)
 
-  (defun org-html-paragraph-join-chinese (paragraph contents info)
+  (define-advice org-html-paragraph
+      (:around (f paragraph contents info) org-html-paragraph-advice)
     "Join consecutive Chinese lines into a single long line without
 unwanted space when exporting org-mode to html."
     (let* ((origin-contents contents)
@@ -169,9 +171,7 @@ unwanted space when exporting org-mode to html."
             (replace-regexp-in-string
              (concat
               "\\(" fix-regexp "\\) *\n *\\(" fix-regexp "\\)") "\\1\\2" origin-contents)))
-      (setq contents fixed-contents)))
-
-  (advice-add 'org-html-paragraph :before #'org-html-paragraph-join-chinese))
+      (funcall f paragraph fixed-contents info))))
 
 ;; Org-roam
 (use-package org-roam
@@ -229,7 +229,6 @@ unwanted space when exporting org-mode to html."
 (use-package forge
   :after magit
   :config
-
   ;; Define class for HTTP gitlab repository.
   (defclass forge-gitlab-http-repository (forge-gitlab-repository)
     ((issues-url-format         :initform "http://%h/%o/%n/issues")
@@ -327,7 +326,7 @@ unwanted space when exporting org-mode to html."
   :ensure nil
   :config
   (setq treesit-language-source-alist
-        '((moonbit "https://github.com/bzy-debug/tree-sitter-moonbit")
+        '((moonbit "https://github.com/moonbitlang/tree-sitter-moonbit")
           (typescript "https://github.com/tree-sitter/tree-sitter-typescript")
           (ocaml "https://github.com/tree-sitter/tree-sitter-ocaml"))))
 
@@ -421,6 +420,7 @@ unwanted space when exporting org-mode to html."
 (use-package tuareg
   :hook (tuareg-mode .eglot-ensure))
 (use-package opam-switch-mode)
+(use-package dune)
 
 ;; Reason
 (use-package reason-mode
@@ -517,8 +517,16 @@ unwanted space when exporting org-mode to html."
   :config
   (setq electric-indent-inhibit t))
 
+(use-package moonbit-mode
+  :vc (moonbit-mode
+       :url "https://github.com/cxa/moonbit-mode"
+       :rev :newest))
+
 (server-start)
 
 (provide 'init)
 
 ;;; init.el ends here
+;; ## added by OPAM user-setup for emacs / base ## 56ab50dc8996d2bb95e7856a6eddb17b ## you can edit, but keep this line
+(require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
+;; ## end of OPAM user-setup addition for emacs / base ## keep this line
