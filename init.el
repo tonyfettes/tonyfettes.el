@@ -116,6 +116,8 @@
 
 (use-package eldoc :delight)
 
+(use-package project)
+
 ;; Org mode
 (use-package org
   :config
@@ -189,6 +191,19 @@ unwanted space when exporting org-mode to html."
   (org-roam-db-autosync-mode)
   (require 'org-roam-protocol))
 
+;; Bibliographyic references
+(use-package citar
+  :custom
+  (citar-bibliography '("~/documents/references.bib"))
+  :hook
+  (LaTeX-mode . citar-capf-setup)
+  (org-mode . citar-capf-setup))
+
+(use-package citar-embark
+  :after citar embark
+  :no-require
+  :config (citar-embark-mode))
+
 (use-package ox-latex
   :ensure nil
   :config
@@ -222,7 +237,6 @@ unwanted space when exporting org-mode to html."
 ;; Git intergration
 (use-package magit
   :config
-  (setq vc-handled-backends nil)
   (setq magit-section-visibility-indicator '("…" . t)))
 
 ;; GitHub/GitLab intergration
@@ -417,8 +431,7 @@ unwanted space when exporting org-mode to html."
 (use-package zig-mode)
 
 ;; OCaml
-(use-package tuareg
-  :hook (tuareg-mode .eglot-ensure))
+(use-package tuareg)
 (use-package opam-switch-mode)
 (use-package dune)
 
@@ -527,6 +540,3 @@ unwanted space when exporting org-mode to html."
 (provide 'init)
 
 ;;; init.el ends here
-;; ## added by OPAM user-setup for emacs / base ## 56ab50dc8996d2bb95e7856a6eddb17b ## you can edit, but keep this line
-(require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
-;; ## end of OPAM user-setup addition for emacs / base ## keep this line
