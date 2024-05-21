@@ -28,11 +28,13 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(diff-hl-delete ((t (:inherit nil :foreground "red3"))))
+ '(fixed-pitch ((t (:family "Sarasa Mono SC"))))
  '(flycheck-error ((t (:underline "Red1"))))
  '(flycheck-info ((t (:underline "ForestGreen"))))
  '(flycheck-warning ((t (:underline "DarkOrange"))))
  '(fringe ((t (:inherit default))))
- '(indent-guide-face ((t (:foreground "dark gray" :slant normal)))))
+ '(indent-guide-face ((t (:foreground "dark gray" :slant normal))))
+ '(variable-pitch ((t (:family "Sarasa Gothic SC")))))
 
 (provide 'custom)
 
