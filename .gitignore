@@ -1,0 +1,14 @@
+/auth-info
+/auto-saves/
+/auto-save-list/
+/elpa/
+/eln-cache/
+/eshell/
+/forge-*.sqlite
+/history
+/org-clock-save.el
+/org-roam.db
+/projects
+/tramp
+/transient/
+/tree-sitter/
