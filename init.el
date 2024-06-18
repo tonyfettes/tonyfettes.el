@@ -275,6 +275,18 @@ unwanted space when exporting org-mode to html."
   :config
   (diff-hl-flydiff-mode))
 
+(use-package dirvish
+  :init
+  (dirvish-override-dired-mode)
+  :config
+  (dirvish-side-follow-mode)
+  (setq dirvish-use-mode-line nil)
+  (setq dirvish-use-header-line nil)
+  :bind
+  (("C-c d" . dirvish-side)
+   :map dirvish-mode-map
+   ("TAB" . dirvish-subtree-toggle)))
+
 ;; Which-keys
 (use-package which-key
   :delight
