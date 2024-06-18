@@ -535,6 +535,9 @@ unwanted space when exporting org-mode to html."
        :url "https://github.com/cxa/moonbit-mode"
        :rev :newest))
 
+(use-package ansi-color
+  :hook (compilation-filter . ansi-color-compilation-filter))
+
 (server-start)
 
 (provide 'init)
