@@ -229,10 +229,16 @@ unwanted space when exporting org-mode to html."
   :init
   (indent-guide-global-mode))
 
-(use-package tramp)
+;; Electric Indentation
+(use-package electric
+  :config
+  (setq electric-indent-inhibit t))
 
-;; Vundo (undo tree)
-(use-package vundo)
+;; Filter ANSI color in compilation buffer
+(use-package ansi-color
+  :hook (compilation-filter . ansi-color-compilation-filter))
+
+(use-package tramp)
 
 ;; Git intergration
 (use-package magit
@@ -514,17 +520,10 @@ unwanted space when exporting org-mode to html."
          ("\\.pdf\\'" . pdf-view-mode))
        auto-mode-alist))
 
-(use-package electric
-  :config
-  (setq electric-indent-inhibit t))
-
 (use-package moonbit-mode
   :vc (moonbit-mode
        :url "https://github.com/cxa/moonbit-mode"
        :rev :newest))
-
-(use-package ansi-color
-  :hook (compilation-filter . ansi-color-compilation-filter))
 
 (server-start)
 
