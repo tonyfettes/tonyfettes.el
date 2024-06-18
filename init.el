@@ -269,15 +269,6 @@ unwanted space when exporting org-mode to html."
   :config
   (diff-hl-flydiff-mode))
 
-;; Terminal
-(use-package vterm
-  :config
-  (defun vterm-disable-hl-line-mode ()
-    (hl-line-mode 'toggle)
-    (hl-line-mode -1))
-
-  :hook (vterm-mode . vterm-disable-hl-line-mode))
-
 ;; Which-keys
 (use-package which-key
   :delight
@@ -484,9 +475,6 @@ unwanted space when exporting org-mode to html."
 
 ;; gnuplot
 (use-package gnuplot)
-
-;; Z3 SMT-LIB
-(use-package z3-mode)
 
 ;; Proof General, for Coq
 (use-package proof-general
