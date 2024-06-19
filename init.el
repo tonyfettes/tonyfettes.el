@@ -238,7 +238,12 @@ unwanted space when exporting org-mode to html."
 (use-package ansi-color
   :hook (compilation-filter . ansi-color-compilation-filter))
 
-(use-package tramp)
+(use-package tramp
+  :custom
+  (tramp-ssh-controlmaster-options
+   (concat
+    "-o ControlPath=/tmp/ssh-ControlPath-%%r@%%h:%%p "
+    "-o ControlMaster=auto -o ControlPersist=yes")))
 
 ;; Git intergration
 (use-package magit
