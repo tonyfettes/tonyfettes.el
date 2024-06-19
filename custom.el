@@ -15,8 +15,8 @@
             flycheck-eglot forge gnuplot image-roll indent-guide
             marginalia moonbit-mode nhexl-mode ob-sagemath
             opam-switch-mode orderless org-present org-roam pdf-tools
-            proof-general reason-mode restart-emacs rust-mode tablist
-            tuareg vertico vundo which-key zig-mode))
+            proof-general pyenv reason-mode restart-emacs rust-mode
+            tablist tuareg vertico vundo which-key zig-mode))
  '(package-vc-selected-packages
    '((consult-tramp :url "https://github.com/Ladicle/consult-tramp")
      (moonbit-mode :url "https://github.com/cxa/moonbit-mode")

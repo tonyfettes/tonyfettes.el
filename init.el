@@ -532,6 +532,8 @@ unwanted space when exporting org-mode to html."
          ("\\.pdf\\'" . pdf-view-mode))
        auto-mode-alist))
 
+(use-package pyenv)
+
 (server-start)
 
 (provide 'init)
