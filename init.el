@@ -332,7 +332,8 @@ unwanted space when exporting org-mode to html."
 
 ;; Commend-line completion
 (use-package consult
-  :hook (completion-list-mode . consult-preview-at-point-mode))
+  :hook (completion-list-mode . consult-preview-at-point-mode)
+  :bind (("C-x /" . consult-ripgrep)))
 
 ;; LSP-integration
 (use-package eglot
