@@ -350,8 +350,7 @@ unwanted space when exporting org-mode to html."
   :ensure nil
   :config
   (setq treesit-language-source-alist
-        '((moonbit "https://github.com/moonbitlang/tree-sitter-moonbit")
-          (typescript "https://github.com/tree-sitter/tree-sitter-typescript")
+        '((typescript "https://github.com/tree-sitter/tree-sitter-typescript")
           (ocaml "https://github.com/tree-sitter/tree-sitter-ocaml"))))
 
 ;; Flymake
@@ -532,11 +531,6 @@ unwanted space when exporting org-mode to html."
          ("\\.lagda.md\\'" . agda2-mode)
          ("\\.pdf\\'" . pdf-view-mode))
        auto-mode-alist))
-
-(use-package moonbit-mode
-  :vc (moonbit-mode
-       :url "https://github.com/cxa/moonbit-mode"
-       :rev :newest))
 
 (server-start)
 
