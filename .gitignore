@@ -12,3 +12,4 @@
 /tramp
 /transient/
 /tree-sitter/
+*.elc
