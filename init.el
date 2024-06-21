@@ -355,7 +355,8 @@ unwanted space when exporting org-mode to html."
   :ensure nil
   :config
   (setq treesit-language-source-alist
-        '((typescript "https://github.com/tree-sitter/tree-sitter-typescript")
+        '((tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+          (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
           (ocaml "https://github.com/tree-sitter/tree-sitter-ocaml"))))
 
 ;; Flymake
