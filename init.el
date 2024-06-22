@@ -502,9 +502,9 @@ unwanted space when exporting org-mode to html."
 
 ;; Proof General, for Coq
 (use-package proof-general
-  :config
+  :custom
   ;; Ask opam for path to coqtop. Sould work across platform.
-  (setq coq-prog-name (car (process-lines "opam" "exec" "--switch=coq" "which" "coqtop"))))
+  (coq-prog-name (car (process-lines "opam" "exec" "--switch=coq" "which" "coqtop"))))
 
 ;; company-coq
 (use-package company-coq
