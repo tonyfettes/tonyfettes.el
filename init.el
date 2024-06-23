@@ -234,6 +234,11 @@ unwanted space when exporting org-mode to html."
   :config
   (setq electric-indent-inhibit t))
 
+(use-package multiple-cursors
+  :bind
+  (("C->" . mc/mark-next-like-this)
+   ("C-<" . mc/mark-previous-like-this)))
+
 ;; Filter ANSI color in compilation buffer
 (use-package ansi-color
   :hook (compilation-filter . ansi-color-compilation-filter))

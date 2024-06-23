@@ -12,12 +12,12 @@
  '(package-selected-packages
    '(auctex cape cdlatex citar-embark company-coq corfu delight diff-hl
             direnv dirvish dune eldoc-box embark-consult
-            exec-path-from-shell flycheck-eglot forge gnuplot
-            image-roll indent-guide marginalia moonbit-mode nhexl-mode
-            ob-sagemath opam-switch-mode orderless org-present
-            org-roam pdf-tools proof-general pyenv reason-mode
-            restart-emacs rust-mode tablist tuareg vertico vundo
-            which-key zig-mode))
+            exec-path-from-shell flycheck-eglot forge gnuplot god-mode
+            image-roll indent-guide marginalia moonbit-mode
+            multiple-cursors nhexl-mode ob-sagemath opam-switch-mode
+            orderless org-present org-roam pdf-tools proof-general
+            pyenv reason-mode restart-emacs rust-mode tablist tuareg
+            vertico vundo which-key zig-mode))
  '(package-vc-selected-packages
    '((consult-tramp :url "https://github.com/Ladicle/consult-tramp")
      (moonbit-mode :url "https://github.com/cxa/moonbit-mode")
