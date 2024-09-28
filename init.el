@@ -348,12 +348,16 @@ unwanted space when exporting org-mode to html."
 
 ;; LSP-integration
 (use-package eglot
+  :config
+  (add-to-list 'eglot-server-programs
+               '(dune-mode . ("ocamllsp")))
   :hook ((rust-mode
           c++-mode
           latex-mode
           python-mode
           reason-mode
           tuareg-mode
+          dune-mode
           latex-mode) . eglot-ensure))
 
 ;; Tree-sitter
