@@ -163,6 +163,8 @@
 
   ;; Render checkbox when export to HTML
   (setq org-html-checkbox-type 'html)
+  ;; Do not export postamble
+  (setq org-export-html-postamble nil)
 
   (define-advice org-html-paragraph
       (:around (f paragraph contents info) org-html-paragraph-advice)
@@ -205,6 +207,11 @@ unwanted space when exporting org-mode to html."
   :no-require
   :config (citar-embark-mode))
 
+(use-package org-contrib)
+
+(use-package ox-S5
+  :after org-contrib)
+
 (use-package ox-latex
   :ensure nil
   :config
@@ -217,7 +224,13 @@ unwanted space when exporting org-mode to html."
                  ("\\subsection{%s}" . "\\subsection*{%s}")
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+  (add-to-list 'org-latex-classes
+               '("ctexbeamer"
+                 "\\documentclass[presentation]{ctexbeamer}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
 
 (use-package org-protocol :ensure nil)
 
@@ -551,6 +564,10 @@ unwanted space when exporting org-mode to html."
 (use-package direnv
   :config
   (direnv-mode))
+
+(use-package vterm)
+
+(use-package multi-vterm)
 
 (server-start)
 
