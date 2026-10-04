@@ -569,6 +569,14 @@ unwanted space when exporting org-mode to html."
 
 (use-package multi-vterm)
 
+(use-package copilot
+  :vc (:url "https://github.com/copilot-emacs/copilot.el"
+            :rev :newest
+            :branch "main")
+  :hook (LaTeX-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("C-c e" . copilot-accept-completion)))
+
 (server-start)
 
 (provide 'init)
