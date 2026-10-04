@@ -9,7 +9,7 @@
 (require 'package)
 (package-initialize)
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
+             '("melpa" . "https://melpa.org/packages/") t)
 
 ;; Use dedicate file for custom.
 (setq custom-file (locate-user-emacs-file "custom.el"))
@@ -44,7 +44,7 @@
 
 ;; Don't put ~ file near the source.
 (setq backup-directory-alist
-      '(("." . (locate-user-emacs-file "backup"))))
+      `(("." . ,(locate-user-emacs-file "backup/"))))
 
 (setq backup-by-copying t)
 
@@ -128,7 +128,7 @@
   (setq org-startup-with-inline-images t)
   ;; Set default width of image to be 400
   (setq org-image-actual-width 400)
-  (setq org-directory '("~/workspace/"))
+  (setq org-directory "~/workspace/")
 
   ;; Org-agenda settings
   (setq org-agenda-files '("~/workspace/"))
@@ -145,10 +145,11 @@
   ;; Set path for exported combined iCalendar file
   (setq org-icalendar-combined-agenda-file "~/personal/calendars/org.ics")
   ;; Include breadcrumbs in the org-agenda view
-  '((agenda . " %i %-12:c%?-12t% s %b")
-    (todo . " %i %-12:c")
-    (tags . " %i %-12:c")
-    (search . " %i %-12:c"))
+  (setq org-agenda-prefix-format
+        '((agenda . " %i %-12:c%?-12t% s %b")
+          (todo . " %i %-12:c")
+          (tags . " %i %-12:c")
+          (search . " %i %-12:c")))
 
   ;; Org-babel Settings
   (org-babel-do-load-languages
@@ -246,7 +247,7 @@ unwanted space when exporting org-mode to html."
 ;; Electric Indentation
 (use-package electric
   :config
-  (setq electric-indent-inhibit t))
+  (setq-default electric-indent-inhibit t))
 
 (use-package multiple-cursors
   :bind
@@ -366,12 +367,11 @@ unwanted space when exporting org-mode to html."
                '(dune-mode . ("ocamllsp")))
   :hook ((rust-mode
           c++-mode
-          latex-mode
+          LaTeX-mode
           python-mode
           reason-mode
           tuareg-mode
-          dune-mode
-          latex-mode) . eglot-ensure))
+          dune-mode) . eglot-ensure))
 
 ;; Tree-sitter
 (use-package treesit
@@ -389,7 +389,7 @@ unwanted space when exporting org-mode to html."
 
 ;; Flycheck
 (use-package flycheck
-  :after (flycheck eglot)
+  :after eglot
   :init (global-flycheck-mode)
   :config
   (setq flycheck-indication-mode 'nil))
@@ -474,8 +474,7 @@ unwanted space when exporting org-mode to html."
 (use-package dune)
 
 ;; Reason
-(use-package reason-mode
-  :hook (reason-mode . eglot-ensure))
+(use-package reason-mode)
 
 ;; LaTeX
 (use-package tex
@@ -534,12 +533,14 @@ unwanted space when exporting org-mode to html."
   :delight company-coq-mode
   :config
   (setq company-coq-disabled-features '(spinner company company-defaults))
-  (setq completion-at-point-functions
-        (mapcar #'cape-company-to-capf
-                (list #'company-coq-master-backend
-                      #'company-coq-choices-backend
-                      #'company-math-symbols-latex
-                      #'company-math-symbols-unicode)))
+  ;; Only replace the completion sources in Coq buffers.
+  (let ((capfs (mapcar #'cape-company-to-capf
+                       (list #'company-coq-master-backend
+                             #'company-coq-choices-backend
+                             #'company-math-symbols-latex
+                             #'company-math-symbols-unicode))))
+    (add-hook 'company-coq-mode-hook
+              (lambda () (setq-local completion-at-point-functions capfs))))
   :hook (coq-mode . company-coq-mode))
 
 (use-package js
