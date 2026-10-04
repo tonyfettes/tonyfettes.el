@@ -17,16 +17,15 @@
             corfu delight diff-hl direnv dirvish dune eldoc-box
             embark-consult exec-path-from-shell flycheck-eglot forge
             gnuplot gptel image-roll indent-guide marginalia
-            moonbit-mode multi-vterm multiple-cursors nhexl-mode
+            moonbit-ts-mode multi-vterm multiple-cursors nhexl-mode
             ob-sagemath opam-switch-mode orderless org-contrib
-            org-present org-roam pdf-tools proof-general pyenv
+            org-present org-roam ox-S5 pdf-tools proof-general pyenv
             reason-mode restart-emacs rust-mode tablist tuareg
             vc-use-package vertico vterm vundo which-key zig-mode))
  '(package-vc-selected-packages
    '((copilot :url "https://github.com/copilot-emacs/copilot.el" :branch
               "main")
      (consult-tramp :url "https://github.com/Ladicle/consult-tramp")
-     (moonbit-mode :url "https://github.com/cxa/moonbit-mode")
      (image-roll :url "https://github.com/dalanicolai/image-roll.el")))
  '(safe-local-variable-directories
    '("/home/tonyfettes/projects/hazelnut-stepper-data/"

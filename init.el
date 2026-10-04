@@ -380,7 +380,9 @@ unwanted space when exporting org-mode to html."
   (setq treesit-language-source-alist
         '((tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
           (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-          (ocaml "https://github.com/tree-sitter/tree-sitter-ocaml"))))
+          (ocaml "https://github.com/tree-sitter/tree-sitter-ocaml")
+          (moonbit "https://github.com/moonbitlang/tree-sitter-moonbit.git" "main" "src")
+          (moonbit_mbtp "https://github.com/moonbitlang/tree-sitter-moonbit.git" "main" "grammars/mbtp/src"))))
 
 ;; Flymake
 (use-package flymake
@@ -467,6 +469,9 @@ unwanted space when exporting org-mode to html."
 
 ;; Zig
 (use-package zig-mode)
+
+;; MoonBit
+(use-package moonbit-ts-mode)
 
 ;; OCaml
 (use-package tuareg)
