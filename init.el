@@ -457,7 +457,7 @@ unwanted space when exporting org-mode to html."
 
 ;; Show ElDoc in childframe
 (use-package eldoc-box
-  :config (eldoc-box-hover-at-point-mode))
+  :hook (eldoc-mode . eldoc-box-hover-at-point-mode))
 
 ;; Hexical mode
 (use-package nhexl-mode)
